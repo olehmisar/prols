@@ -7,7 +7,8 @@ import {
   Note,
   TxHash,
 } from "@aztec/aztec.js";
-import type { CurrencyAmount } from "@uniswap/sdk-core";
+import { CurrencyAmount } from "@uniswap/sdk-core";
+import ky from "ky";
 import type { L2Token } from "./aztec-currency";
 import { ProlsRouterContract, TokenContract } from "./contracts";
 import { CurrencyListService } from "./currency-list";
@@ -16,6 +17,26 @@ import { currencyAmountToBigInt } from "./utils";
 
 export class ProlsFrontendService {
   constructor(private routerAddress: AztecAddress) {}
+
+  async getQuote({
+    amountIn,
+    currencyOut,
+  }: {
+    amountIn: CurrencyAmount<L2Token>;
+    currencyOut: L2Token;
+  }) {
+    const amountOutResp = await ky
+      .post("/quote", {
+        json: {
+          amountIn: amountIn.quotient.toString(),
+          amountInSymbol: amountIn.currency.symbol,
+          amountOutSymbol: currencyOut.symbol,
+        },
+      })
+      .json<{ amountOut: string }>();
+
+    return CurrencyAmount.fromRawAmount(currencyOut, amountOutResp.amountOut);
+  }
 
   async swap(account: AccountWallet, quote: Quote) {
     const secret = Fr.random();
