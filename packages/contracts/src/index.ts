@@ -5,7 +5,7 @@ export async function tokenContract(
   accountOrPxe: AccountWallet | PXE,
 ) {
   const { TokenContract } = await import("./contracts.js");
-  return await TokenContract.at( token, castPxeToAccount(accountOrPxe),);
+  return await TokenContract.at(token, castPxeToAccount(accountOrPxe));
 }
 
 export function castPxeToAccount(
