@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { ArrowDown } from "lucide-svelte";
   import { Button } from "$lib/components/ui/button";
   import {
     Card,
@@ -12,13 +10,13 @@
   } from "$lib/components/ui/card";
   import { Input } from "$lib/components/ui/input";
   import * as Select from "$lib/components/ui/select";
-
-  // Import the SDK (you may need to adjust the import path)
   import {
     createFrontendSdk,
-    parseCurrencyAmount,
     formatCurrencyAmount,
+    parseCurrencyAmount
   } from "@repo/contracts";
+  import { ArrowDown } from "lucide-svelte";
+  import { onMount } from "svelte";
 
   const sdk = createFrontendSdk();
 
@@ -31,8 +29,28 @@
   let fromToken = "";
   let toToken = "";
   let error = "";
-  let exchangeRate = 0;
   let quote = undefined;
+
+  let balances = [];
+  onMount(async () => {
+    const account = await sdk.prols.connectWallet();
+    const currencies = sdk.currencyList.getCurrencies();
+    const balances2 = await Promise.all(currencies.map(token => sdk.prols.balanceOfPrivate(account, token)));
+    const routerBalances = await Promise.all(currencies.map(token => sdk.prols.balanceOfPublic(account, token)));
+    console.log('routerBalances', routerBalances.map(b => `${b.currency.symbol}: ${formatCurrencyAmount(b)}`));
+    balances = balances2;
+
+    if (balances2.some(b => b.quotient.toString() === '0')) {
+      console.log('minting...')
+      await Promise.all([
+        sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '10')}),
+        sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('USDT')!, '50000')}),
+
+        sdk.prols.mintPublic({ to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '100') }),
+        sdk.prols.mintPublic({ to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('USDT')!, '100000') }),
+      ])
+    }
+  });
 
   async function getExchangeRate(
     fromToken: string,
@@ -80,6 +98,15 @@
     <CardTitle>Crypto Token Swap</CardTitle>
     <CardDescription>Exchange your tokens instantly</CardDescription>
   </CardHeader>
+    <CardContent class="space-y-4">
+    <div class="space-y-2">
+      <div class="flex space-x-2">
+        {#each balances as balance}
+          {balance.currency.symbol}: {formatCurrencyAmount(balance)} <br>
+        {/each}
+      </div>
+    </div>
+    </CardContent>
   <CardContent class="space-y-4">
     <div class="space-y-2">
       <div class="flex space-x-2">

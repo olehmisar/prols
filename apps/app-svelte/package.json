@@ -27,6 +27,7 @@
 		"@aztec/accounts": "0.55.1",
 		"@aztec/aztec.js": "0.55.1",
 		"@repo/contracts": "workspace:^",
+		"@uniswap/sdk-core": "^5.8.1",
 		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
 		"lucide-svelte": "^0.447.0",

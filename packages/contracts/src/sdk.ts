@@ -67,6 +67,15 @@ export class ProlsFrontendService {
     return CurrencyAmount.fromRawAmount(token, raw.toString());
   }
 
+  async balanceOfPublic(account: AccountWallet, token: L2Token) {
+    const raw = await (
+      await tokenContract(AztecAddress.fromString(token.address), account)
+    ).methods
+      .balance_of_public(account.getAddress())
+      .simulate();
+    return CurrencyAmount.fromRawAmount(token, raw.toString());
+  }
+
   async swap(account: AccountWallet, quote: Quote) {
     const secret = Fr.random();
     const secretHash = computeSecretHash(secret);
@@ -165,10 +174,13 @@ export class ProlsFrontendService {
     to,
     amount,
   }: {
-    minter: AccountWallet;
+    minter?: AccountWallet;
     to: AccountWallet;
     amount: CurrencyAmount<L2Token>;
   }) {
+    const accounts = await getInitialTestAccountsWallets(this.pxe);
+    minter ??= accounts[0]!;
+
     const secret = Fr.random();
     const secretHash = computeSecretHash(secret);
 
@@ -188,6 +200,23 @@ export class ProlsFrontendService {
       secret,
       txHash: receipt.txHash,
     });
+  }
+
+  async mintPublic({
+    to,
+    amount,
+  }: {
+    to: AccountWallet;
+    amount: CurrencyAmount<L2Token>;
+  }) {
+    const token = await tokenContract(
+      AztecAddress.fromString(amount.currency.address),
+      to,
+    );
+    return await token.methods
+      .mint_public(to.getAddress(), currencyAmountToBigInt(amount))
+      .send()
+      .wait();
   }
 
   async #getRouter(account: AccountWallet) {
