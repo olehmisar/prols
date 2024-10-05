@@ -45,6 +45,7 @@ describe('Token Contract', () => {
             const secret = Fr.random();
             const secretHash = computeSecretHash(secret);
             const nonce = Fr.random();
+
             bob.createAuthWit({
                 caller: bob.getAddress(), action:
                     usdc.methods.unshield(bob.getAddress(), prolsRouter.address, 20, nonce).request()
@@ -58,17 +59,15 @@ describe('Token Contract', () => {
 
 
             const note = new Note([new Fr(1), secretHash])
-
-            await pxe.addNote(
-                new ExtendedNote(
-                    note,
-                    bob.getAddress(),
-                    eth.address,
-                    TokenContract.storage.pending_shields.slot,
-                    TokenContract.notes.TransparentNote.id,
-                    receipt.txHash
-                )
-            );
+            const extendedNote = new ExtendedNote(
+                note,
+                bob.getAddress(),
+                eth.address,
+                TokenContract.storage.pending_shields.slot,
+                TokenContract.notes.TransparentNote.id,
+                receipt.txHash
+            )
+            await pxe.addNote(extendedNote, bob.getAddress());
 
             await eth.withWallet(bob).methods.redeem_shield(bob.getAddress(), 1, secret).send().wait();
 
