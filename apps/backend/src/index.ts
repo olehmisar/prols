@@ -65,6 +65,8 @@ app.post("/hedge", async (req, res) => {
   assert(currencyOut, `Currency not found: "${parsed.amountOutSymbol}"`);
   const amountOut = CurrencyAmount.fromRawAmount(currencyOut, parsed.amountOut);
   await sdk.prols.hedge({ amountIn, amountOut });
+
+  res.status(200).json({ success: true });
 });
 
 const port = process.env.PORT || 3000;
