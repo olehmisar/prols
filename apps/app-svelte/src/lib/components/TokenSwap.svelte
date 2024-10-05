@@ -14,16 +14,16 @@
   import * as Select from "$lib/components/ui/select";
 
   // Import the SDK (you may need to adjust the import path)
-  import { createFrontendSdk, parseCurrencyAmount } from "@repo/contracts";
-  import { getInitialTestAccountsWallets } from "@aztec/accounts/testing";
-
-
+  import {
+    createFrontendSdk,
+    parseCurrencyAmount,
+    formatCurrencyAmount,
+  } from "@repo/contracts";
 
   const sdk = createFrontendSdk();
 
-
   const tokens = sdk.currencyList.getCurrencies().map((token) => ({
-    value: token.address,
+    value: token.symbol,
     label: token.symbol,
   }));
 
@@ -35,16 +35,22 @@
   let exchangeRate = 0;
   let quote = undefined;
 
-  function getExchangeRate(fromToken: string, toToken: string) {
-    sdk.prols.getQuote({
-        amountIn: parseCurrencyAmount(sdk.currencyList.getBySymbol(fromToken), fromAmount) ,
-        currencyOut: sdk.currencyList.getBySymbol(toToken)
-    })
-
-    if (fromToken === "eth") {
-      return 2545;
-    } else {
-      return 0.000382;
+  async function getExchangeRate(
+    fromToken: string,
+    toToken: string,
+    fromAmount: string,
+  ) {
+    try {
+      console.log(fromToken, toToken, fromAmount);
+      quote = await sdk.prols.getQuote({
+        amountIn: parseCurrencyAmount(
+          sdk.currencyList.getBySymbol(fromToken)!,
+          fromAmount,
+        ),
+        currencyOut: sdk.currencyList.getBySymbol(toToken)!,
+      });
+    } catch (e) {
+      //   console.error(e);
     }
   }
 
@@ -53,11 +59,11 @@
   }
 
   $: {
-    exchangeRate = getExchangeRate(fromToken, toToken);
+    getExchangeRate(fromToken, toToken, fromAmount);
   }
 
-  function handleSwap() {
-    const account = await sdk.prols.connectWallet()
+  async function handleSwap() {
+    const account = await sdk.prols.connectWallet();
 
     if (!fromAmount || !toAmount || !fromToken || !toToken) {
       error = "Please fill in all fields";
@@ -73,8 +79,6 @@
     );
     // Here you would typically call your swap function or API
     // sdk.prols.swap({ account: account, quote:
-
-    }});
   }
 </script>
 
@@ -125,7 +129,7 @@
         <Input
           type="number"
           placeholder="0.00"
-          bind:value={toAmount}
+          value={quote ? formatCurrencyAmount(quote?.amountOut) : "0"}
           class="flex-grow"
         />
         <Select.Root
