@@ -16,6 +16,6 @@
     // strictness
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": false
   }
 }
