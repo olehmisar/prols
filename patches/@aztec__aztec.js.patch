@@ -1,0 +1,13 @@
+diff --git a/dest/utils/cheat_codes.js b/dest/utils/cheat_codes.js
+index 2fc1eb0649768c2afd335e468a312478f70310fb..74ada63c9aad23d6283b6b34a1b5fcd7dd9c176c 100644
+--- a/dest/utils/cheat_codes.js
++++ b/dest/utils/cheat_codes.js
+@@ -3,7 +3,7 @@ import { deriveStorageSlotInMap } from '@aztec/circuits.js/hash';
+ import { toBigIntBE, toHex } from '@aztec/foundation/bigint-buffer';
+ import { keccak256 } from '@aztec/foundation/crypto';
+ import { createDebugLogger } from '@aztec/foundation/log';
+-import fs from 'fs';
++// import fs from 'fs';
+ /**
+  * A class that provides utility functions for interacting with the chain.
+  */

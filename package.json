@@ -5,7 +5,8 @@
   "pnpm": {
     "patchedDependencies": {
       "@aztec/foundation@0.55.1": "patches/@aztec__foundation.patch",
-      "@aztec/circuits.js@0.55.1": "patches/@aztec__circuits.js.patch"
+      "@aztec/circuits.js@0.55.1": "patches/@aztec__circuits.js.patch",
+      "@aztec/aztec.js@0.55.1": "patches/@aztec__aztec.js.patch"
     }
   }
 }

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@aztec/aztec.js@0.55.1':
+    hash: 7nu4e65fhsfisexp7untjbpro4
+    path: patches/@aztec__aztec.js.patch
   '@aztec/circuits.js@0.55.1':
     hash: cunq7g67umbihfnx4mjr6mv7r4
     path: patches/@aztec__circuits.js.patch
@@ -130,7 +133,7 @@ importers:
         version: 0.55.1(typescript@5.6.2)(zod@3.23.8)
       '@aztec/aztec.js':
         specifier: 0.55.1
-        version: 0.55.1(typescript@5.6.2)(zod@3.23.8)
+        version: 0.55.1(patch_hash=7nu4e65fhsfisexp7untjbpro4)(typescript@5.6.2)(zod@3.23.8)
       '@uniswap/sdk-core':
         specifier: ^5.8.1
         version: 5.8.1
@@ -3780,7 +3783,7 @@ snapshots:
 
   '@aztec/accounts@0.55.1(typescript@5.6.2)(zod@3.23.8)':
     dependencies:
-      '@aztec/aztec.js': 0.55.1(typescript@5.6.2)(zod@3.23.8)
+      '@aztec/aztec.js': 0.55.1(patch_hash=7nu4e65fhsfisexp7untjbpro4)(typescript@5.6.2)(zod@3.23.8)
       '@aztec/circuit-types': 0.55.1(typescript@5.6.2)(zod@3.23.8)
       '@aztec/circuits.js': 0.55.1(patch_hash=cunq7g67umbihfnx4mjr6mv7r4)(typescript@5.6.2)(zod@3.23.8)
       '@aztec/entrypoints': 0.55.1(typescript@5.6.2)(zod@3.23.8)
@@ -3796,7 +3799,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@aztec/aztec.js@0.55.1(typescript@5.6.2)(zod@3.23.8)':
+  '@aztec/aztec.js@0.55.1(patch_hash=7nu4e65fhsfisexp7untjbpro4)(typescript@5.6.2)(zod@3.23.8)':
     dependencies:
       '@aztec/circuit-types': 0.55.1(typescript@5.6.2)(zod@3.23.8)
       '@aztec/circuits.js': 0.55.1(patch_hash=cunq7g67umbihfnx4mjr6mv7r4)(typescript@5.6.2)(zod@3.23.8)
@@ -3860,7 +3863,7 @@ snapshots:
 
   '@aztec/entrypoints@0.55.1(typescript@5.6.2)(zod@3.23.8)':
     dependencies:
-      '@aztec/aztec.js': 0.55.1(typescript@5.6.2)(zod@3.23.8)
+      '@aztec/aztec.js': 0.55.1(patch_hash=7nu4e65fhsfisexp7untjbpro4)(typescript@5.6.2)(zod@3.23.8)
       '@aztec/circuit-types': 0.55.1(typescript@5.6.2)(zod@3.23.8)
       '@aztec/circuits.js': 0.55.1(patch_hash=cunq7g67umbihfnx4mjr6mv7r4)(typescript@5.6.2)(zod@3.23.8)
       '@aztec/foundation': 0.55.1(patch_hash=pa2eqrseuslqu4lda5mc56ujjy)
@@ -5706,7 +5709,7 @@ snapshots:
       '@typescript-eslint/parser': 8.8.0(eslint@8.57.1)(typescript@5.6.2)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.0(eslint@8.57.1)
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
@@ -5726,13 +5729,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.3.7
       enhanced-resolve: 5.17.1
       eslint: 8.57.1
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
@@ -5745,14 +5748,14 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.8.0(eslint@8.57.1)(typescript@5.6.2)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -5767,7 +5770,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
