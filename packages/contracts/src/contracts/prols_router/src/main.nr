@@ -11,6 +11,8 @@ contract ProlsRouter {
         secret_hash: Field,
         nonce: Field
     ) {
+        // TODO: check that quote is coming from the admin: recoverPublicKey(poseidon2([sell_token, buy_token, sell_amount, buy_amount]), signature) == admin
+
         Token::at(sell_token).unshield(
             context.msg_sender(),
             context.this_address(),
