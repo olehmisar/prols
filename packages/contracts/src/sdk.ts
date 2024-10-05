@@ -22,7 +22,7 @@ export const API_URL = "http://localhost:3000";
 
 export class ProlsFrontendService {
   readonly pxe: PXE;
-  constructor(private routerAddress: AztecAddress) {
+  constructor(readonly routerAddress: AztecAddress) {
     this.pxe = createPXEClient("https://sandbox.shieldswap.org");
   }
 
@@ -67,11 +67,14 @@ export class ProlsFrontendService {
     return CurrencyAmount.fromRawAmount(token, raw.toString());
   }
 
-  async balanceOfPublic(account: AccountWallet, token: L2Token) {
+  async balanceOfPublic(account: AztecAddress, token: L2Token) {
     const raw = await (
-      await tokenContract(AztecAddress.fromString(token.address), account)
+      await tokenContract(
+        AztecAddress.fromString(token.address),
+        await this.connectWallet(),
+      )
     ).methods
-      .balance_of_public(account.getAddress())
+      .balance_of_public(account)
       .simulate();
     return CurrencyAmount.fromRawAmount(token, raw.toString());
   }
@@ -98,8 +101,9 @@ export class ProlsFrontendService {
         )
         .request(),
     });
-    const swapTx = await router.methods
-      .swap(
+    const swapTx = await router
+      .withWallet(account)
+      .methods.swap(
         AztecAddress.fromString(quote.amountIn.currency.address),
         AztecAddress.fromString(quote.amountOut.currency.address),
         currencyAmountToBigInt(quote.amountIn),
@@ -178,8 +182,7 @@ export class ProlsFrontendService {
     to: AccountWallet;
     amount: CurrencyAmount<L2Token>;
   }) {
-    const accounts = await getInitialTestAccountsWallets(this.pxe);
-    minter ??= accounts[0]!;
+    minter ??= await this.getAdmin();
 
     const secret = Fr.random();
     const secretHash = computeSecretHash(secret);
@@ -206,21 +209,26 @@ export class ProlsFrontendService {
     to,
     amount,
   }: {
-    to: AccountWallet;
+    to: AztecAddress;
     amount: CurrencyAmount<L2Token>;
   }) {
     const token = await tokenContract(
       AztecAddress.fromString(amount.currency.address),
-      to,
+      await this.getAdmin(),
     );
     return await token.methods
-      .mint_public(to.getAddress(), currencyAmountToBigInt(amount))
+      .mint_public(to, currencyAmountToBigInt(amount))
       .send()
       .wait();
   }
 
   async #getRouter(account: AccountWallet) {
     return await ProlsRouterContract.at(this.routerAddress, account);
+  }
+
+  async getAdmin() {
+    const accounts = await getInitialTestAccountsWallets(this.pxe);
+    return accounts[0]!;
   }
 }
 
@@ -233,7 +241,7 @@ export function createFrontendSdk(routerAddress = addresses.prolsRouter) {
   };
 }
 
-type Quote = {
+export type Quote = {
   amountIn: CurrencyAmount<L2Token>;
   amountOut: CurrencyAmount<L2Token>;
 };

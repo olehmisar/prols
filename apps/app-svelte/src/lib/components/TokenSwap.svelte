@@ -13,8 +13,11 @@
   import {
     createFrontendSdk,
     formatCurrencyAmount,
-    parseCurrencyAmount
+    L2Token,
+    parseCurrencyAmount,
+    type Quote
   } from "@repo/contracts";
+  import type { CurrencyAmount } from '@uniswap/sdk-core';
   import { ArrowDown } from "lucide-svelte";
   import { onMount } from "svelte";
 
@@ -29,25 +32,26 @@
   let fromToken = "";
   let toToken = "";
   let error = "";
-  let quote = undefined;
+  let quote: Quote | undefined = undefined;
 
-  let balances = [];
+  let balances: CurrencyAmount<L2Token>[] = [];
   onMount(async () => {
     const account = await sdk.prols.connectWallet();
     const currencies = sdk.currencyList.getCurrencies();
+    const routerAddress = sdk.prols.routerAddress;
     const balances2 = await Promise.all(currencies.map(token => sdk.prols.balanceOfPrivate(account, token)));
-    const routerBalances = await Promise.all(currencies.map(token => sdk.prols.balanceOfPublic(account, token)));
+    const routerBalances = await Promise.all(currencies.map(token => sdk.prols.balanceOfPublic(routerAddress, token)));
     console.log('routerBalances', routerBalances.map(b => `${b.currency.symbol}: ${formatCurrencyAmount(b)}`));
     balances = balances2;
 
-    if (balances2.some(b => b.quotient.toString() === '0')) {
+    if (balances2.some(b => b.quotient.toString() === '0') || true) {
       console.log('minting...')
       await Promise.all([
         sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '10')}),
         sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('USDT')!, '50000')}),
 
-        sdk.prols.mintPublic({ to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '100') }),
-        sdk.prols.mintPublic({ to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('USDT')!, '100000') }),
+        sdk.prols.mintPublic({ to: routerAddress, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '100') }),
+        sdk.prols.mintPublic({ to: routerAddress, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('USDT')!, '100000') }),
       ])
     }
   });

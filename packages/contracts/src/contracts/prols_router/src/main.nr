@@ -12,6 +12,8 @@ contract ProlsRouter {
         nonce: Field
     ) {
         // TODO: check that quote is coming from the admin: recoverPublicKey(poseidon2([sell_token, buy_token, sell_amount, buy_amount]), signature) == admin
+        // TODO: add a tx deadline to protect against abuse
+        // TODO: add fees, so we can earn some profit
 
         Token::at(sell_token).unshield(
             context.msg_sender(),
