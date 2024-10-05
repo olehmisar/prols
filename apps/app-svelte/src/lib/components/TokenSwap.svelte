@@ -44,7 +44,7 @@
     console.log('routerBalances', routerBalances.map(b => `${b.currency.symbol}: ${formatCurrencyAmount(b)}`));
     balances = balances2;
 
-    if (balances2.some(b => b.quotient.toString() === '0') || true) {
+    if (balances2.some(b => b.quotient.toString() === '0')) {
       console.log('minting...')
       await Promise.all([
         sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '10')}),

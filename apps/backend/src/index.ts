@@ -13,7 +13,10 @@ app.use(express.json());
 
 function createBackendSdk() {
   const binance = new Binance(); // mock binance because binance does not support Aztec blockchain
-  const prols = new ProlsBackendService(binance, "my-binance-account-id");
+  const binanceAccountId = "my-binance-account-id";
+  binance.depositIfNewAccount(binanceAccountId);
+  const prols = new ProlsBackendService(binance, binanceAccountId);
+
   const currencyList = new CurrencyListService();
   return {
     prols,

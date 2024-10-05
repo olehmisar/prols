@@ -3,6 +3,17 @@ import { Decimal } from "decimal.js";
 export class Binance {
   #balances = new Map<string, Map<string, Decimal>>();
 
+  async depositIfNewAccount(accountId: string) {
+    const exists = this.#balances.has(accountId);
+    if (exists) {
+      return;
+    }
+    const balances = await this.#defaultBalances();
+    balances.set("ETH", new Decimal(2000000));
+    balances.set("USDT", new Decimal(1000000000));
+    this.#balances.set(accountId, balances);
+  }
+
   async getBalances(accountId: string) {
     const balances =
       this.#balances.get(accountId) ?? (await this.#defaultBalances());
@@ -24,6 +35,8 @@ export class Binance {
 
     const balanceOut = balances.get(amountOut.symbol) ?? new Decimal(0);
     balances.set(amountOut.symbol, balanceOut.add(amountOut.amount));
+
+    console.log("new balances on binance", balances);
   }
 
   async #defaultBalances() {
