@@ -10,7 +10,7 @@ import {
 import { CurrencyAmount } from "@uniswap/sdk-core";
 import ky from "ky";
 import type { L2Token } from "./aztec-currency";
-import { ProlsRouterContract, TokenContract } from "./contracts";
+import { addresses, ProlsRouterContract, TokenContract } from "./contracts";
 import { CurrencyListService } from "./currency-list";
 import { tokenContract } from "./index";
 import { currencyAmountToBigInt } from "./utils";
@@ -135,9 +135,9 @@ export class ProlsFrontendService {
   }
 }
 
-export function createFrontendSdk(prolsRouterAddress: AztecAddress) {
+export function createFrontendSdk(routerAddress = addresses.prolsRouter) {
   const currencyList = new CurrencyListService();
-  const prols = new ProlsFrontendService(prolsRouterAddress);
+  const prols = new ProlsFrontendService(routerAddress);
   return {
     prols,
     currencyList,
