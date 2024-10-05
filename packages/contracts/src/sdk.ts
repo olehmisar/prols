@@ -72,7 +72,12 @@ export class ProlsFrontendService {
           account,
         )
       ).methods
-        .unshield(account.getAddress(), router.address, 20, nonce)
+        .unshield(
+          account.getAddress(),
+          router.address,
+          currencyAmountToBigInt(quote.amountIn),
+          nonce,
+        )
         .request(),
     });
     const swapTx = await router.methods
