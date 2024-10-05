@@ -58,6 +58,13 @@ export class ProlsFrontendService {
     };
   }
 
+  async getBinanceBalances() {
+    const res = await ky
+      .get(`${API_URL}/binance-balances`)
+      .json<{ [symbol: string]: string }>();
+    return res;
+  }
+
   async balanceOfPrivate(account: AccountWallet, token: L2Token) {
     const raw = await (
       await tokenContract(AztecAddress.fromString(token.address), account)

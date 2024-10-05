@@ -30,6 +30,9 @@ importers:
       '@repo/contracts':
         specifier: workspace:^
         version: link:../../packages/contracts
+      '@tanstack/svelte-query':
+        specifier: ^5.59.0
+        version: 5.59.0(svelte@4.2.19)
       '@uniswap/sdk-core':
         specifier: ^5.8.1
         version: 5.8.1
@@ -803,6 +806,14 @@ packages:
     resolution: {integrity: sha512-AqhlCXl+8grUz8uqExv5OTtgpjuVIwFTSXTrh8y9/pw6q2ek7fJ+Y8ZEVw7EB2DCcuCOtEjf9w3+J3rzts01uA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
+
+  '@tanstack/query-core@5.59.0':
+    resolution: {integrity: sha512-WGD8uIhX6/deH/tkZqPNcRyAhDUqs729bWKoByYHSogcshXfFbppOdTER5+qY7mFvu8KEFJwT0nxr8RfPTVh0Q==}
+
+  '@tanstack/svelte-query@5.59.0':
+    resolution: {integrity: sha512-KjRQg6me2LSNvENUJalvLjTfFG2kmWRd7K+hFyPd2CysfqFAoyKvXnzLaUfJgtDSS4cobLlqMECZQ7kD37VGhw==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
 
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -3395,6 +3406,13 @@ snapshots:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.13
+
+  '@tanstack/query-core@5.59.0': {}
+
+  '@tanstack/svelte-query@5.59.0(svelte@4.2.19)':
+    dependencies:
+      '@tanstack/query-core': 5.59.0
+      svelte: 4.2.19
 
   '@types/body-parser@1.19.5':
     dependencies:

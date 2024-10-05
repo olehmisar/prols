@@ -10,14 +10,15 @@
   } from "$lib/components/ui/card";
   import { Input } from "$lib/components/ui/input";
   import * as Select from "$lib/components/ui/select";
+  import { queryClient } from '$lib/queryClient';
+  import { sleep } from '@aztec/aztec.js';
   import {
     createFrontendSdk,
     formatCurrencyAmount,
-    L2Token,
     parseCurrencyAmount,
     type Quote
   } from "@repo/contracts";
-  import type { CurrencyAmount } from '@uniswap/sdk-core';
+  import { createQuery } from '@tanstack/svelte-query';
   import { ArrowDown } from "lucide-svelte";
   import { onMount } from "svelte";
 
@@ -34,17 +35,33 @@
   let error = "";
   let quote: Quote | undefined = undefined;
 
-  let balances: CurrencyAmount<L2Token>[] = [];
+  const currencies = sdk.currencyList.getCurrencies();
+  let balances = createQuery({
+    queryKey: ['balances'],
+    queryFn: async () => {
+      const account = await sdk.prols.connectWallet();
+      return await Promise.all(currencies.map(token => sdk.prols.balanceOfPrivate(account, token)));
+    },
+  });
+  let routerBalances = createQuery({
+    queryKey: ['routerBalances'],
+    queryFn: async () => {
+      return await Promise.all(currencies.map(token => sdk.prols.balanceOfPublic(sdk.prols.routerAddress, token)));
+    },
+  });
+  let binanceBalances = createQuery({
+    queryKey: ['binanceBalances'],
+    queryFn: async () => {
+      return Object.entries(await sdk.prols.getBinanceBalances()).map(([symbol, amount]) => `${symbol}: ${amount}`);
+    },
+  });
+
   onMount(async () => {
     const account = await sdk.prols.connectWallet();
-    const currencies = sdk.currencyList.getCurrencies();
     const routerAddress = sdk.prols.routerAddress;
-    const balances2 = await Promise.all(currencies.map(token => sdk.prols.balanceOfPrivate(account, token)));
-    const routerBalances = await Promise.all(currencies.map(token => sdk.prols.balanceOfPublic(routerAddress, token)));
-    console.log('routerBalances', routerBalances.map(b => `${b.currency.symbol}: ${formatCurrencyAmount(b)}`));
-    balances = balances2;
 
-    if (balances2.some(b => b.quotient.toString() === '0')) {
+    let shouldMint = false;
+    if (shouldMint) {
       console.log('minting...')
       await Promise.all([
         sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '10')}),
@@ -92,8 +109,12 @@
     }
     error = "";
     console.log(`Swapping ${fromAmount} ${fromToken} to ${toToken}`);
-    // Here you would typically call your swap function or API
-    sdk.prols.swap(account, quote);
+    await sdk.prols.swap(account, quote);
+    setTimeout(async () => {
+      // background job
+      await sleep(1000); // wait for binance trade
+      queryClient.invalidateQueries();
+    });
   }
 </script>
 
@@ -102,15 +123,16 @@
     <CardTitle>Crypto Token Swap</CardTitle>
     <CardDescription>Exchange your tokens instantly</CardDescription>
   </CardHeader>
-    <CardContent class="space-y-4">
+  <CardContent class="space-y-4">
     <div class="space-y-2">
       <div class="flex space-x-2">
-        {#each balances as balance}
+        {#each $balances.data ?? [] as balance}
           {balance.currency.symbol}: {formatCurrencyAmount(balance)} <br>
         {/each}
       </div>
     </div>
-    </CardContent>
+  </CardContent>
+
   <CardContent class="space-y-4">
     <div class="space-y-2">
       <div class="flex space-x-2">
@@ -187,4 +209,25 @@
   <CardFooter>
     <Button class="w-full" on:click={handleSwap}>Swap Tokens</Button>
   </CardFooter>
+</Card>
+
+<Card class="w-full max-w-md mx-auto mt-4">
+  <CardContent class="space-y-4">
+    <div class="space-y-2">
+      Protocol balances on chain:
+      <div class="flex space-x-2">
+        {#each $routerBalances.data ?? [] as balance}
+          {balance.currency.symbol}: {formatCurrencyAmount(balance)} <br>
+        {/each}
+      </div>
+    </div>
+    <div class="space-y-2">
+      Protocol balances on Binance:
+      <div class="flex space-x-2">
+        {#each $binanceBalances.data ?? [] as balance}
+          {balance} <br>
+        {/each}
+      </div>
+    </div>
+  </CardContent>
 </Card>

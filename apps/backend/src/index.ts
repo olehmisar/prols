@@ -19,7 +19,9 @@ function createBackendSdk() {
 
   const currencyList = new CurrencyListService();
   return {
+    binanceAccountId,
     prols,
+    binance,
     currencyList,
   };
 }
@@ -70,6 +72,11 @@ app.post("/hedge", async (req, res) => {
   await sdk.prols.hedge({ amountIn, amountOut });
 
   res.status(200).json({ success: true });
+});
+
+app.get("/binance-balances", async (req, res) => {
+  const balances = await sdk.binance.getBalances(sdk.binanceAccountId);
+  res.json(Object.fromEntries(balances.entries()));
 });
 
 const port = process.env.PORT || 3000;
