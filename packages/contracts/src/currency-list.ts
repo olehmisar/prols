@@ -1,5 +1,5 @@
 import _ from "lodash";
-import type { L2Token } from "./aztec-currency.js";
+import type { L2Token } from "./aztec-currency";
 
 export class CurrencyListService {
   #currencies: L2Token[] = [];

@@ -1,4 +1,4 @@
-import type { BaseCurrency } from "@uniswap/sdk-core/dist/entities/baseCurrency.js";
+import type { BaseCurrency } from "@uniswap/sdk-core/dist/entities/baseCurrency";
 import invariant from "tiny-invariant";
 
 export abstract class L2BaseCurrency implements BaseCurrency {

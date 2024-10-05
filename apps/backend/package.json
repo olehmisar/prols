@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "pnpm _chore && tsx src/index.ts",
+    "dev": "pnpm _chore && tsx --watch src/index.ts",
     "test": "pnpm test:lint && pnpm test:unit",
     "test:unit": "pnpm _chore && vitest run",
     "test:lint": "pnpm _chore && tsc --noEmit --emitDeclarationOnly false && prettier --check . && eslint .",

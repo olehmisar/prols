@@ -10,11 +10,11 @@ import {
 } from "@aztec/aztec.js";
 import { assert } from "ts-essentials";
 import { beforeAll, describe, expect, it } from "vitest";
-import { L2Token } from "./aztec-currency.js";
-import { TokenContract } from "./contracts.js";
-import { ProlsRouterContract } from "./contracts/prols_router/target/ProlsRouter.js";
-import { createFrontendSdk } from "./sdk.js";
-import { parseCurrencyAmount } from "./utils.js";
+import { L2Token } from "./aztec-currency";
+import { TokenContract } from "./contracts";
+import { ProlsRouterContract } from "./contracts/prols_router/target/ProlsRouter";
+import { createFrontendSdk } from "./sdk";
+import { parseCurrencyAmount } from "./utils";
 
 describe("Token Contract", () => {
   let alice: AccountWallet, bob: AccountWallet, admin: AccountWallet;

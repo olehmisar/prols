@@ -8,10 +8,10 @@ import {
   TxHash,
 } from "@aztec/aztec.js";
 import type { CurrencyAmount } from "@uniswap/sdk-core";
-import type { L2Token } from "./aztec-currency.js";
-import { ProlsRouterContract, TokenContract } from "./contracts.js";
-import { tokenContract } from "./index.js";
-import { currencyAmountToBigInt } from "./utils.js";
+import type { L2Token } from "./aztec-currency";
+import { ProlsRouterContract, TokenContract } from "./contracts";
+import { tokenContract } from "./index";
+import { currencyAmountToBigInt } from "./utils";
 
 export class ProlsFrontendService {
   constructor(private routerAddress: AztecAddress) {}
