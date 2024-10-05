@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@aztec/accounts": "0.55.1",
 		"@aztec/aztec.js": "0.55.1",
 		"@repo/contracts": "workspace:^",
 		"bits-ui": "^0.21.16",

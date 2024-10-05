@@ -11,33 +11,36 @@
     CardTitle,
   } from "$lib/components/ui/card";
   import { Input } from "$lib/components/ui/input";
-  import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "$lib/components/ui/select";
+  import * as Select from "$lib/components/ui/select";
 
   // Import the SDK (you may need to adjust the import path)
-  import { createFrontendSdk } from "@repo/contracts";
+  import { createFrontendSdk, parseCurrencyAmount } from "@repo/contracts";
+  import { getInitialTestAccountsWallets } from "@aztec/accounts/testing";
 
-  const tokens = [
-    { value: "eth", label: "Ethereum (ETH)" },
-    { value: "usdt", label: "Tether (USDT)" },
-  ];
+
 
   const sdk = createFrontendSdk();
-  sdk.currencyList.getCurrencyList();
+
+
+  const tokens = sdk.currencyList.getCurrencies().map((token) => ({
+    value: token.address,
+    label: token.symbol,
+  }));
 
   let fromAmount = "";
   let toAmount = "";
   let fromToken = "";
   let toToken = "";
   let error = "";
-  let exchangeRate = 4;
+  let exchangeRate = 0;
+  let quote = undefined;
 
   function getExchangeRate(fromToken: string, toToken: string) {
+    sdk.prols.getQuote({
+        amountIn: parseCurrencyAmount(sdk.currencyList.getBySymbol(fromToken), fromAmount) ,
+        currencyOut: sdk.currencyList.getBySymbol(toToken)
+    })
+
     if (fromToken === "eth") {
       return 2545;
     } else {
@@ -54,6 +57,8 @@
   }
 
   function handleSwap() {
+    const account = await sdk.prols.connectWallet()
+
     if (!fromAmount || !toAmount || !fromToken || !toToken) {
       error = "Please fill in all fields";
       return;
@@ -67,6 +72,9 @@
       `Swapping ${fromAmount} ${fromToken} to ${toAmount} ${toToken}`,
     );
     // Here you would typically call your swap function or API
+    // sdk.prols.swap({ account: account, quote:
+
+    }});
   }
 </script>
 
@@ -84,18 +92,29 @@
           bind:value={fromAmount}
           class="flex-grow"
         />
-        <Select bind:value={fromToken}>
-          <SelectTrigger class="w-[180px]">
-            <SelectValue placeholder="Select token" />
-          </SelectTrigger>
-          <SelectContent>
-            {#each tokens as token}
-              <SelectItem value={token.value}>
-                {token.label}
-              </SelectItem>
-            {/each}
-          </SelectContent>
-        </Select>
+
+        <Select.Root
+          onSelectedChange={(e) => {
+            // @ts-ignore
+            fromToken = e.value;
+          }}
+          portal={null}
+        >
+          <Select.Trigger class="w-[180px]">
+            <Select.Value placeholder="Select token" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Group>
+              <Select.Label>Tokens</Select.Label>
+              {#each tokens as token}
+                <Select.Item value={token.value} label={token.label}>
+                  {token.label}
+                </Select.Item>
+              {/each}
+            </Select.Group>
+          </Select.Content>
+          <Select.Input name="fromToken" />
+        </Select.Root>
       </div>
     </div>
     <div class="flex justify-center">
@@ -109,18 +128,28 @@
           bind:value={toAmount}
           class="flex-grow"
         />
-        <Select bind:value={toToken}>
-          <SelectTrigger class="w-[180px]">
-            <SelectValue placeholder="Select token" />
-          </SelectTrigger>
-          <SelectContent>
-            {#each tokens as token}
-              <SelectItem value={token.value}>
-                {token.label}
-              </SelectItem>
-            {/each}
-          </SelectContent>
-        </Select>
+        <Select.Root
+          onSelectedChange={(e) => {
+            // @ts-ignore
+            toToken = e.value;
+          }}
+          portal={null}
+        >
+          <Select.Trigger class="w-[180px]">
+            <Select.Value placeholder="Select token" />
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Group>
+              <Select.Label>Tokens</Select.Label>
+              {#each tokens as token}
+                <Select.Item value={token.value} label={token.label}>
+                  {token.label}
+                </Select.Item>
+              {/each}
+            </Select.Group>
+          </Select.Content>
+          <Select.Input name="fromToken" />
+        </Select.Root>
       </div>
     </div>
     {#if error}
