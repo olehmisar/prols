@@ -37,7 +37,7 @@ export class ProlsFrontendService {
   }: {
     amountIn: CurrencyAmount<L2Token>;
     currencyOut: L2Token;
-  }) {
+  }): Promise<Quote> {
     const amountOutResp = await ky
       .post(API_URL + "/quote", {
         json: {
@@ -48,7 +48,14 @@ export class ProlsFrontendService {
       })
       .json<{ amountOut: string }>();
 
-    return CurrencyAmount.fromRawAmount(currencyOut, amountOutResp.amountOut);
+    const amountOut = CurrencyAmount.fromRawAmount(
+      currencyOut,
+      amountOutResp.amountOut,
+    );
+    return {
+      amountIn,
+      amountOut,
+    };
   }
 
   async swap(account: AccountWallet, quote: Quote) {
