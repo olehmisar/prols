@@ -10,6 +10,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
+		"@shieldswap/vite-plugin-aztec": "^0.0.2",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
@@ -23,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@aztec/aztec.js": "0.55.1",
 		"@repo/contracts": "workspace:^",
 		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
