@@ -28,7 +28,6 @@
   }));
 
   let fromAmount = "";
-  let toAmount = "";
   let fromToken = "";
   let toToken = "";
   let error = "";
@@ -55,17 +54,13 @@
   }
 
   $: {
-    toAmount = String(Number(fromAmount) * exchangeRate);
-  }
-
-  $: {
     getExchangeRate(fromToken, toToken, fromAmount);
   }
 
   async function handleSwap() {
     const account = await sdk.prols.connectWallet();
 
-    if (!fromAmount || !toAmount || !fromToken || !toToken) {
+    if (!fromAmount || !fromToken || !toToken) {
       error = "Please fill in all fields";
       return;
     }
@@ -74,9 +69,7 @@
       return;
     }
     error = "";
-    console.log(
-      `Swapping ${fromAmount} ${fromToken} to ${toAmount} ${toToken}`,
-    );
+    console.log(`Swapping ${fromAmount} ${fromToken} to ${toToken}`);
     // Here you would typically call your swap function or API
     // sdk.prols.swap({ account: account, quote:
   }
