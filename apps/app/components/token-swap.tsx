@@ -7,11 +7,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
+import { createFrontendSdk } from "@repo/contracts"
+
 const tokens = [
     { value: "eth", label: "Ethereum (ETH)" },
     { value: "usdt", label: "Tether (USDT)" },
 ]
 
+const sdk = createFrontendSdk()
 
 function getExchangeRate(
     fromToken: string,
