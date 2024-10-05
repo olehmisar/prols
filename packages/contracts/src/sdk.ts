@@ -58,6 +58,15 @@ export class ProlsFrontendService {
     };
   }
 
+  async balanceOfPrivate(account: AccountWallet, token: L2Token) {
+    const raw = await (
+      await tokenContract(AztecAddress.fromString(token.address), account)
+    ).methods
+      .balance_of_private(account.getAddress())
+      .simulate();
+    return CurrencyAmount.fromRawAmount(token, raw.toString());
+  }
+
   async swap(account: AccountWallet, quote: Quote) {
     const secret = Fr.random();
     const secretHash = computeSecretHash(secret);
