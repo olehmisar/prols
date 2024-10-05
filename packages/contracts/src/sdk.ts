@@ -63,6 +63,18 @@ export class ProlsFrontendService {
     const secretHash = computeSecretHash(secret);
     const nonce = Fr.random();
     const router = await this.#getRouter(account);
+
+    await account.createAuthWit({
+      caller: router.address,
+      action: (
+        await tokenContract(
+          AztecAddress.fromString(quote.amountIn.currency.address),
+          account,
+        )
+      ).methods
+        .unshield(account.getAddress(), router.address, 20, nonce)
+        .request(),
+    });
     const swapTx = await router.methods
       .swap(
         AztecAddress.fromString(quote.amountIn.currency.address),
