@@ -6,10 +6,9 @@ export { TokenContract } from "./contracts/token/target/Token";
 
 export const addresses = _.mapValues(
   {
-    USDT: "0x03f854726e0defe02be1d5fa44166e1f0a5aaa2cef85d42b1f03080d9cee2f45",
-    ETH: "0x05da7151e480509d054b5457fa139da3b7149a1b10faaf08793776d38fde4ba8",
-    prolsRouter:
-      "0x0c9fda146ea2bb20edecb35bcb08be7e9e5d5aa326da01b12481302891faf31e",
+    USDT: '0x244a5ae682f0ddcd7a4cd5542230b3042ac05febcfb54d2fba018ce1f390ef85',
+    ETH: '0x0ceccda494fb24dadcea55c58a9a3977bc54e8ce3419dd5a21d0f3391a491870',
+    prolsRouter: '0x009310317e7e9da58ada7271fda6272b57a76e3975c81499738c6a94f664e3f6'
   },
   (a) => AztecAddress.fromString(a),
 );

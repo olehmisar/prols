@@ -24,7 +24,7 @@ async function main() {
     admin?.getAddress(),
     "ETH",
     "ETH",
-    18,
+    9,
   )
     .send()
     .deployed();
