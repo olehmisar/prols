@@ -9,7 +9,7 @@ export class ProlsBackendService {
   constructor(
     private binance: Binance,
     private managerAccountId: string,
-  ) {}
+  ) { }
 
   async hedge({
     amountIn,
@@ -49,7 +49,7 @@ export class ProlsBackendService {
         },
       })
       .json<{ price: string }>();
-    const price = new Decimal(response.price);
+    const price = new Decimal(2000);
     console.log("price", ticker, price);
     const amountInDecimal = new Decimal(amountIn.quotient.toString()).div(
       new Decimal(10).pow(amountIn.currency.decimals),

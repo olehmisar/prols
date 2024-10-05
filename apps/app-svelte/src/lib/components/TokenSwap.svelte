@@ -10,15 +10,15 @@
   } from "$lib/components/ui/card";
   import { Input } from "$lib/components/ui/input";
   import * as Select from "$lib/components/ui/select";
-  import { queryClient } from '$lib/queryClient';
-  import { sleep } from '@aztec/aztec.js';
+  import { queryClient } from "$lib/queryClient";
+  import { sleep } from "@aztec/aztec.js";
   import {
     createFrontendSdk,
     formatCurrencyAmount,
     parseCurrencyAmount,
-    type Quote
+    type Quote,
   } from "@repo/contracts";
-  import { createQuery } from '@tanstack/svelte-query';
+  import { createQuery } from "@tanstack/svelte-query";
   import { ArrowDown } from "lucide-svelte";
   import { onMount } from "svelte";
 
@@ -37,22 +37,30 @@
 
   const currencies = sdk.currencyList.getCurrencies();
   let balances = createQuery({
-    queryKey: ['balances'],
+    queryKey: ["balances"],
     queryFn: async () => {
       const account = await sdk.prols.connectWallet();
-      return await Promise.all(currencies.map(token => sdk.prols.balanceOfPrivate(account, token)));
+      return await Promise.all(
+        currencies.map((token) => sdk.prols.balanceOfPrivate(account, token)),
+      );
     },
   });
   let routerBalances = createQuery({
-    queryKey: ['routerBalances'],
+    queryKey: ["routerBalances"],
     queryFn: async () => {
-      return await Promise.all(currencies.map(token => sdk.prols.balanceOfPublic(sdk.prols.routerAddress, token)));
+      return await Promise.all(
+        currencies.map((token) =>
+          sdk.prols.balanceOfPublic(sdk.prols.routerAddress, token),
+        ),
+      );
     },
   });
   let binanceBalances = createQuery({
-    queryKey: ['binanceBalances'],
+    queryKey: ["binanceBalances"],
     queryFn: async () => {
-      return Object.entries(await sdk.prols.getBinanceBalances()).map(([symbol, amount]) => `${symbol}: ${amount}`);
+      return Object.entries(await sdk.prols.getBinanceBalances()).map(
+        ([symbol, amount]) => `${symbol}: ${amount}`,
+      );
     },
   });
 
@@ -62,14 +70,32 @@
 
     let shouldMint = false;
     if (shouldMint) {
-      console.log('minting...')
+      console.log("minting...");
       await Promise.all([
-        sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '10')}),
-        sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('USDT')!, '50000')}),
+        // sdk.prols.mintPrivateAndRedeem({to: account, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '0')}),
+        sdk.prols.mintPrivateAndRedeem({
+          to: account,
+          amount: parseCurrencyAmount(
+            sdk.currencyList.getBySymbol("USDT")!,
+            "2000",
+          ),
+        }),
 
-        sdk.prols.mintPublic({ to: routerAddress, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('ETH')!, '100') }),
-        sdk.prols.mintPublic({ to: routerAddress, amount: parseCurrencyAmount(sdk.currencyList.getBySymbol('USDT')!, '100000') }),
-      ])
+        sdk.prols.mintPublic({
+          to: routerAddress,
+          amount: parseCurrencyAmount(
+            sdk.currencyList.getBySymbol("ETH")!,
+            "1",
+          ),
+        }),
+        // sdk.prols.mintPublic({
+        //   to: routerAddress,
+        //   amount: parseCurrencyAmount(
+        //     sdk.currencyList.getBySymbol("USDT")!,
+        //     "100000",
+        //   ),
+        // }),
+      ]);
     }
   });
 
@@ -118,20 +144,25 @@
   }
 </script>
 
-<Card class="w-full max-w-md mx-auto">
+<Card class="w-full max-w-md mx-auto mb-4">
   <CardHeader>
-    <CardTitle>Crypto Token Swap</CardTitle>
-    <CardDescription>Exchange your tokens instantly</CardDescription>
+    <CardTitle>User Balance</CardTitle>
   </CardHeader>
   <CardContent class="space-y-4">
     <div class="space-y-2">
       <div class="flex space-x-2">
         {#each $balances.data ?? [] as balance}
-          {balance.currency.symbol}: {formatCurrencyAmount(balance)} <br>
+          {balance.currency.symbol}: {formatCurrencyAmount(balance)} <br />
         {/each}
       </div>
     </div>
   </CardContent>
+</Card>
+
+<Card class="w-full max-w-md mx-auto">
+  <CardHeader>
+    <CardTitle>Token Swap</CardTitle>
+  </CardHeader>
 
   <CardContent class="space-y-4">
     <div class="space-y-2">
@@ -212,20 +243,23 @@
 </Card>
 
 <Card class="w-full max-w-md mx-auto mt-4">
+  <CardHeader>
+    <CardTitle>Protocol Balanace</CardTitle>
+  </CardHeader>
   <CardContent class="space-y-4">
     <div class="space-y-2">
-      Protocol balances on chain:
+      On-chain:
       <div class="flex space-x-2">
         {#each $routerBalances.data ?? [] as balance}
-          {balance.currency.symbol}: {formatCurrencyAmount(balance)} <br>
+          {balance.currency.symbol}: {formatCurrencyAmount(balance)} <br />
         {/each}
       </div>
     </div>
     <div class="space-y-2">
-      Protocol balances on Binance:
+      On Binance:
       <div class="flex space-x-2">
         {#each $binanceBalances.data ?? [] as balance}
-          {balance} <br>
+          {balance} <br />
         {/each}
       </div>
     </div>

@@ -9,8 +9,8 @@ export class Binance {
       return;
     }
     const balances = await this.#defaultBalances();
-    balances.set("ETH", new Decimal(2000000));
-    balances.set("USDT", new Decimal(1000000000));
+    balances.set("ETH", new Decimal(0));
+    balances.set("USDT", new Decimal(2000));
     this.#balances.set(accountId, balances);
   }
 
