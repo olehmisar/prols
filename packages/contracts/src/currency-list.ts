@@ -12,6 +12,10 @@ export class CurrencyListService {
     ]);
   }
 
+  getCurrencies() {
+    return this.#currencies;
+  }
+
   async addCurrencies(currencies: L2Token[]) {
     this.#currencies = _.uniqWith(
       [...this.#currencies, ...currencies],
