@@ -18,7 +18,8 @@ const sdk = createFrontendSdk()
 
 function getExchangeRate(
     fromToken: string,
-    toToken: string
+    toToken: string,
+
 ) {
     if (fromToken === "eth") {
         return 2545
