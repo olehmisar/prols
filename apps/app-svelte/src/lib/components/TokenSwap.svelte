@@ -60,7 +60,7 @@
   async function handleSwap() {
     const account = await sdk.prols.connectWallet();
 
-    if (!fromAmount || !fromToken || !toToken) {
+    if (!quote) {
       error = "Please fill in all fields";
       return;
     }
@@ -71,7 +71,7 @@
     error = "";
     console.log(`Swapping ${fromAmount} ${fromToken} to ${toToken}`);
     // Here you would typically call your swap function or API
-    // sdk.prols.swap({ account: account, quote:
+    sdk.prols.swap(account, quote);
   }
 </script>
 
