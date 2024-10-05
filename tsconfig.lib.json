@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "sourceMap": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true
+  }
+}

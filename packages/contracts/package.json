@@ -1,0 +1,33 @@
+{
+  "name": "@repo/contracts",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./contracts": "./src/contracts.ts"
+  },
+  "scripts": {
+    "compile": "pnpm compile:_path prols_router ProlsRouter && pnpm compile:_path token Token",
+    "compile:_path": "sh ../../scripts/compile-contract.sh src/contracts",
+    "dev": "pnpm _chore && tsc -w",
+    "build": "pnpm _chore && rm -rf dist && tsc",
+    "test": "pnpm test:lint && pnpm test:unit",
+    "test:unit": "pnpm _chore && vitest run",
+    "test:lint": "pnpm _chore && tsc --noEmit --emitDeclarationOnly false && prettier --check . && eslint .",
+    "test:lint:fix": "pnpm _chore && prettier --write . && eslint . --fix",
+    "prepublishOnly": "echo 'this package is private' && exit 1",
+    "_chore": "pnpm i"
+  },
+  "dependencies": {
+    "@aztec/accounts": "0.55.1",
+    "@aztec/aztec.js": "0.55.1",
+    "ts-essentials": "^9.4.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "typescript": "^5.5.2"
+  }
+}

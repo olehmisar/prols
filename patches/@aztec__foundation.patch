@@ -1,0 +1,13 @@
+diff --git a/dest/json-rpc/convert.js b/dest/json-rpc/convert.js
+index bccc0b26e0b456980880aa04b740b8e2129e8a2b..c326fad1f66c1e2a615ae0d54326461a42ca1482 100644
+--- a/dest/json-rpc/convert.js
++++ b/dest/json-rpc/convert.js
+@@ -109,7 +109,7 @@ export function convertToJsonObj(cc, obj) {
+         return obj; // Primitive type
+     }
+     // Is this a Node buffer?
+-    if (obj instanceof Buffer) {
++    if (obj instanceof Buffer || Buffer.isBuffer(obj)) {
+         return { type: 'Buffer', data: obj.toString('base64') };
+     }
+     // Is this a convertible type?

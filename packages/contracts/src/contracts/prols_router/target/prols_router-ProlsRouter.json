@@ -1,0 +1,2026 @@
+{
+  "transpiled": true,
+  "noir_version": "0.34.0+e0185e75e65df08b5334856f8bf63fa3aed7049a",
+  "name": "ProlsRouter",
+  "functions": [
+    {
+      "name": "settle",
+      "is_unconstrained": false,
+      "custom_attributes": [
+        "aztec(private)"
+      ],
+      "abi": {
+        "error_types": {},
+        "parameters": [
+          {
+            "name": "inputs",
+            "type": {
+              "fields": [
+                {
+                  "name": "call_context",
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "msg_sender",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "inner",
+                              "type": {
+                                "kind": "field"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                        }
+                      },
+                      {
+                        "name": "storage_contract_address",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "inner",
+                              "type": {
+                                "kind": "field"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                        }
+                      },
+                      {
+                        "name": "function_selector",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "inner",
+                              "type": {
+                                "kind": "integer",
+                                "sign": "unsigned",
+                                "width": 32
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::abis::function_selector::FunctionSelector"
+                        }
+                      },
+                      {
+                        "name": "is_delegate_call",
+                        "type": {
+                          "kind": "boolean"
+                        }
+                      },
+                      {
+                        "name": "is_static_call",
+                        "type": {
+                          "kind": "boolean"
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::call_context::CallContext"
+                  }
+                },
+                {
+                  "name": "historical_header",
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "last_archive",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "root",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "next_available_leaf_index",
+                              "type": {
+                                "kind": "integer",
+                                "sign": "unsigned",
+                                "width": 32
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                        }
+                      },
+                      {
+                        "name": "content_commitment",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "num_txs",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "txs_effects_hash",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "in_hash",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "out_hash",
+                              "type": {
+                                "kind": "field"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::content_commitment::ContentCommitment"
+                        }
+                      },
+                      {
+                        "name": "state",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "l1_to_l2_message_tree",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "root",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  },
+                                  {
+                                    "name": "next_available_leaf_index",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                              }
+                            },
+                            {
+                              "name": "partial",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "note_hash_tree",
+                                    "type": {
+                                      "fields": [
+                                        {
+                                          "name": "root",
+                                          "type": {
+                                            "kind": "field"
+                                          }
+                                        },
+                                        {
+                                          "name": "next_available_leaf_index",
+                                          "type": {
+                                            "kind": "integer",
+                                            "sign": "unsigned",
+                                            "width": 32
+                                          }
+                                        }
+                                      ],
+                                      "kind": "struct",
+                                      "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                                    }
+                                  },
+                                  {
+                                    "name": "nullifier_tree",
+                                    "type": {
+                                      "fields": [
+                                        {
+                                          "name": "root",
+                                          "type": {
+                                            "kind": "field"
+                                          }
+                                        },
+                                        {
+                                          "name": "next_available_leaf_index",
+                                          "type": {
+                                            "kind": "integer",
+                                            "sign": "unsigned",
+                                            "width": 32
+                                          }
+                                        }
+                                      ],
+                                      "kind": "struct",
+                                      "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                                    }
+                                  },
+                                  {
+                                    "name": "public_data_tree",
+                                    "type": {
+                                      "fields": [
+                                        {
+                                          "name": "root",
+                                          "type": {
+                                            "kind": "field"
+                                          }
+                                        },
+                                        {
+                                          "name": "next_available_leaf_index",
+                                          "type": {
+                                            "kind": "integer",
+                                            "sign": "unsigned",
+                                            "width": 32
+                                          }
+                                        }
+                                      ],
+                                      "kind": "struct",
+                                      "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::partial_state_reference::PartialStateReference"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::state_reference::StateReference"
+                        }
+                      },
+                      {
+                        "name": "global_variables",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "chain_id",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "version",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "block_number",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "slot_number",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "timestamp",
+                              "type": {
+                                "kind": "integer",
+                                "sign": "unsigned",
+                                "width": 64
+                              }
+                            },
+                            {
+                              "name": "coinbase",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "inner",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::address::eth_address::EthAddress"
+                              }
+                            },
+                            {
+                              "name": "fee_recipient",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "inner",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                              }
+                            },
+                            {
+                              "name": "gas_fees",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "fee_per_da_gas",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  },
+                                  {
+                                    "name": "fee_per_l2_gas",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::gas_fees::GasFees"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::abis::global_variables::GlobalVariables"
+                        }
+                      },
+                      {
+                        "name": "total_fees",
+                        "type": {
+                          "kind": "field"
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::header::Header"
+                  }
+                },
+                {
+                  "name": "tx_context",
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "chain_id",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "version",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "gas_settings",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "gas_limits",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "da_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  },
+                                  {
+                                    "name": "l2_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::gas::Gas"
+                              }
+                            },
+                            {
+                              "name": "teardown_gas_limits",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "da_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  },
+                                  {
+                                    "name": "l2_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::gas::Gas"
+                              }
+                            },
+                            {
+                              "name": "max_fees_per_gas",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "fee_per_da_gas",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  },
+                                  {
+                                    "name": "fee_per_l2_gas",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::gas_fees::GasFees"
+                              }
+                            },
+                            {
+                              "name": "inclusion_fee",
+                              "type": {
+                                "kind": "field"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::abis::gas_settings::GasSettings"
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::transaction::tx_context::TxContext"
+                  }
+                },
+                {
+                  "name": "start_side_effect_counter",
+                  "type": {
+                    "kind": "integer",
+                    "sign": "unsigned",
+                    "width": 32
+                  }
+                }
+              ],
+              "kind": "struct",
+              "path": "aztec::context::inputs::private_context_inputs::PrivateContextInputs"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "sell_token",
+            "type": {
+              "fields": [
+                {
+                  "name": "inner",
+                  "type": {
+                    "kind": "field"
+                  }
+                }
+              ],
+              "kind": "struct",
+              "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "buy_token",
+            "type": {
+              "fields": [
+                {
+                  "name": "inner",
+                  "type": {
+                    "kind": "field"
+                  }
+                }
+              ],
+              "kind": "struct",
+              "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "sell_amount",
+            "type": {
+              "kind": "field"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "buy_amount",
+            "type": {
+              "kind": "field"
+            },
+            "visibility": "private"
+          }
+        ],
+        "return_type": {
+          "abi_type": {
+            "fields": [
+              {
+                "name": "call_context",
+                "type": {
+                  "fields": [
+                    {
+                      "name": "msg_sender",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "inner",
+                            "type": {
+                              "kind": "field"
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                      }
+                    },
+                    {
+                      "name": "storage_contract_address",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "inner",
+                            "type": {
+                              "kind": "field"
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                      }
+                    },
+                    {
+                      "name": "function_selector",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "inner",
+                            "type": {
+                              "kind": "integer",
+                              "sign": "unsigned",
+                              "width": 32
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::abis::function_selector::FunctionSelector"
+                      }
+                    },
+                    {
+                      "name": "is_delegate_call",
+                      "type": {
+                        "kind": "boolean"
+                      }
+                    },
+                    {
+                      "name": "is_static_call",
+                      "type": {
+                        "kind": "boolean"
+                      }
+                    }
+                  ],
+                  "kind": "struct",
+                  "path": "aztec::protocol_types::abis::call_context::CallContext"
+                }
+              },
+              {
+                "name": "args_hash",
+                "type": {
+                  "kind": "field"
+                }
+              },
+              {
+                "name": "returns_hash",
+                "type": {
+                  "kind": "field"
+                }
+              },
+              {
+                "name": "min_revertible_side_effect_counter",
+                "type": {
+                  "kind": "integer",
+                  "sign": "unsigned",
+                  "width": 32
+                }
+              },
+              {
+                "name": "is_fee_payer",
+                "type": {
+                  "kind": "boolean"
+                }
+              },
+              {
+                "name": "max_block_number",
+                "type": {
+                  "fields": [
+                    {
+                      "name": "_opt",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "_is_some",
+                            "type": {
+                              "kind": "boolean"
+                            }
+                          },
+                          {
+                            "name": "_value",
+                            "type": {
+                              "kind": "integer",
+                              "sign": "unsigned",
+                              "width": 32
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "std::option::Option"
+                      }
+                    }
+                  ],
+                  "kind": "struct",
+                  "path": "aztec::protocol_types::abis::max_block_number::MaxBlockNumber"
+                }
+              },
+              {
+                "name": "note_hash_read_requests",
+                "type": {
+                  "kind": "array",
+                  "length": 16,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "value",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::read_request::ReadRequest"
+                  }
+                }
+              },
+              {
+                "name": "nullifier_read_requests",
+                "type": {
+                  "kind": "array",
+                  "length": 16,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "value",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::read_request::ReadRequest"
+                  }
+                }
+              },
+              {
+                "name": "key_validation_requests_and_generators",
+                "type": {
+                  "kind": "array",
+                  "length": 16,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "request",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "pk_m",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "x",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  },
+                                  {
+                                    "name": "y",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  },
+                                  {
+                                    "name": "is_infinite",
+                                    "type": {
+                                      "kind": "boolean"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "std::embedded_curve_ops::EmbeddedCurvePoint"
+                              }
+                            },
+                            {
+                              "name": "sk_app",
+                              "type": {
+                                "kind": "field"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::abis::validation_requests::key_validation_request::KeyValidationRequest"
+                        }
+                      },
+                      {
+                        "name": "sk_app_generator",
+                        "type": {
+                          "kind": "field"
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::validation_requests::key_validation_request_and_generator::KeyValidationRequestAndGenerator"
+                  }
+                }
+              },
+              {
+                "name": "note_hashes",
+                "type": {
+                  "kind": "array",
+                  "length": 16,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "value",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::note_hash::NoteHash"
+                  }
+                }
+              },
+              {
+                "name": "nullifiers",
+                "type": {
+                  "kind": "array",
+                  "length": 16,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "value",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      },
+                      {
+                        "name": "note_hash",
+                        "type": {
+                          "kind": "field"
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::nullifier::Nullifier"
+                  }
+                }
+              },
+              {
+                "name": "private_call_requests",
+                "type": {
+                  "kind": "array",
+                  "length": 4,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "contract_address",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "inner",
+                              "type": {
+                                "kind": "field"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                        }
+                      },
+                      {
+                        "name": "call_context",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "msg_sender",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "inner",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                              }
+                            },
+                            {
+                              "name": "storage_contract_address",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "inner",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                              }
+                            },
+                            {
+                              "name": "function_selector",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "inner",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::function_selector::FunctionSelector"
+                              }
+                            },
+                            {
+                              "name": "is_delegate_call",
+                              "type": {
+                                "kind": "boolean"
+                              }
+                            },
+                            {
+                              "name": "is_static_call",
+                              "type": {
+                                "kind": "boolean"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::abis::call_context::CallContext"
+                        }
+                      },
+                      {
+                        "name": "args_hash",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "returns_hash",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "start_side_effect_counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      },
+                      {
+                        "name": "end_side_effect_counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::private_call_request::PrivateCallRequest"
+                  }
+                }
+              },
+              {
+                "name": "public_call_requests",
+                "type": {
+                  "kind": "array",
+                  "length": 16,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "item",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "contract_address",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "inner",
+                                    "type": {
+                                      "kind": "field"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                              }
+                            },
+                            {
+                              "name": "call_context",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "msg_sender",
+                                    "type": {
+                                      "fields": [
+                                        {
+                                          "name": "inner",
+                                          "type": {
+                                            "kind": "field"
+                                          }
+                                        }
+                                      ],
+                                      "kind": "struct",
+                                      "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                                    }
+                                  },
+                                  {
+                                    "name": "storage_contract_address",
+                                    "type": {
+                                      "fields": [
+                                        {
+                                          "name": "inner",
+                                          "type": {
+                                            "kind": "field"
+                                          }
+                                        }
+                                      ],
+                                      "kind": "struct",
+                                      "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                                    }
+                                  },
+                                  {
+                                    "name": "function_selector",
+                                    "type": {
+                                      "fields": [
+                                        {
+                                          "name": "inner",
+                                          "type": {
+                                            "kind": "integer",
+                                            "sign": "unsigned",
+                                            "width": 32
+                                          }
+                                        }
+                                      ],
+                                      "kind": "struct",
+                                      "path": "aztec::protocol_types::abis::function_selector::FunctionSelector"
+                                    }
+                                  },
+                                  {
+                                    "name": "is_delegate_call",
+                                    "type": {
+                                      "kind": "boolean"
+                                    }
+                                  },
+                                  {
+                                    "name": "is_static_call",
+                                    "type": {
+                                      "kind": "boolean"
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::call_context::CallContext"
+                              }
+                            },
+                            {
+                              "name": "args_hash",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "returns_hash",
+                              "type": {
+                                "kind": "field"
+                              }
+                            },
+                            {
+                              "name": "revert_code",
+                              "type": {
+                                "kind": "integer",
+                                "sign": "unsigned",
+                                "width": 8
+                              }
+                            },
+                            {
+                              "name": "start_gas_left",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "da_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  },
+                                  {
+                                    "name": "l2_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::gas::Gas"
+                              }
+                            },
+                            {
+                              "name": "end_gas_left",
+                              "type": {
+                                "fields": [
+                                  {
+                                    "name": "da_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  },
+                                  {
+                                    "name": "l2_gas",
+                                    "type": {
+                                      "kind": "integer",
+                                      "sign": "unsigned",
+                                      "width": 32
+                                    }
+                                  }
+                                ],
+                                "kind": "struct",
+                                "path": "aztec::protocol_types::abis::gas::Gas"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::abis::public_call_stack_item_compressed::PublicCallStackItemCompressed"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::public_call_request::PublicCallRequest"
+                  }
+                }
+              },
+              {
+                "name": "public_teardown_call_request",
+                "type": {
+                  "fields": [
+                    {
+                      "name": "item",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "contract_address",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "inner",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                            }
+                          },
+                          {
+                            "name": "call_context",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "msg_sender",
+                                  "type": {
+                                    "fields": [
+                                      {
+                                        "name": "inner",
+                                        "type": {
+                                          "kind": "field"
+                                        }
+                                      }
+                                    ],
+                                    "kind": "struct",
+                                    "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                                  }
+                                },
+                                {
+                                  "name": "storage_contract_address",
+                                  "type": {
+                                    "fields": [
+                                      {
+                                        "name": "inner",
+                                        "type": {
+                                          "kind": "field"
+                                        }
+                                      }
+                                    ],
+                                    "kind": "struct",
+                                    "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                                  }
+                                },
+                                {
+                                  "name": "function_selector",
+                                  "type": {
+                                    "fields": [
+                                      {
+                                        "name": "inner",
+                                        "type": {
+                                          "kind": "integer",
+                                          "sign": "unsigned",
+                                          "width": 32
+                                        }
+                                      }
+                                    ],
+                                    "kind": "struct",
+                                    "path": "aztec::protocol_types::abis::function_selector::FunctionSelector"
+                                  }
+                                },
+                                {
+                                  "name": "is_delegate_call",
+                                  "type": {
+                                    "kind": "boolean"
+                                  }
+                                },
+                                {
+                                  "name": "is_static_call",
+                                  "type": {
+                                    "kind": "boolean"
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::call_context::CallContext"
+                            }
+                          },
+                          {
+                            "name": "args_hash",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "returns_hash",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "revert_code",
+                            "type": {
+                              "kind": "integer",
+                              "sign": "unsigned",
+                              "width": 8
+                            }
+                          },
+                          {
+                            "name": "start_gas_left",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "da_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                },
+                                {
+                                  "name": "l2_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::gas::Gas"
+                            }
+                          },
+                          {
+                            "name": "end_gas_left",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "da_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                },
+                                {
+                                  "name": "l2_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::gas::Gas"
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::abis::public_call_stack_item_compressed::PublicCallStackItemCompressed"
+                      }
+                    },
+                    {
+                      "name": "counter",
+                      "type": {
+                        "kind": "integer",
+                        "sign": "unsigned",
+                        "width": 32
+                      }
+                    }
+                  ],
+                  "kind": "struct",
+                  "path": "aztec::protocol_types::abis::public_call_request::PublicCallRequest"
+                }
+              },
+              {
+                "name": "l2_to_l1_msgs",
+                "type": {
+                  "kind": "array",
+                  "length": 2,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "recipient",
+                        "type": {
+                          "fields": [
+                            {
+                              "name": "inner",
+                              "type": {
+                                "kind": "field"
+                              }
+                            }
+                          ],
+                          "kind": "struct",
+                          "path": "aztec::protocol_types::address::eth_address::EthAddress"
+                        }
+                      },
+                      {
+                        "name": "content",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::messaging::l2_to_l1_message::L2ToL1Message"
+                  }
+                }
+              },
+              {
+                "name": "start_side_effect_counter",
+                "type": {
+                  "kind": "integer",
+                  "sign": "unsigned",
+                  "width": 32
+                }
+              },
+              {
+                "name": "end_side_effect_counter",
+                "type": {
+                  "kind": "integer",
+                  "sign": "unsigned",
+                  "width": 32
+                }
+              },
+              {
+                "name": "note_encrypted_logs_hashes",
+                "type": {
+                  "kind": "array",
+                  "length": 16,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "value",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      },
+                      {
+                        "name": "length",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "note_hash_counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::log_hash::NoteLogHash"
+                  }
+                }
+              },
+              {
+                "name": "encrypted_logs_hashes",
+                "type": {
+                  "kind": "array",
+                  "length": 4,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "value",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      },
+                      {
+                        "name": "length",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "randomness",
+                        "type": {
+                          "kind": "field"
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::log_hash::EncryptedLogHash"
+                  }
+                }
+              },
+              {
+                "name": "unencrypted_logs_hashes",
+                "type": {
+                  "kind": "array",
+                  "length": 4,
+                  "type": {
+                    "fields": [
+                      {
+                        "name": "value",
+                        "type": {
+                          "kind": "field"
+                        }
+                      },
+                      {
+                        "name": "counter",
+                        "type": {
+                          "kind": "integer",
+                          "sign": "unsigned",
+                          "width": 32
+                        }
+                      },
+                      {
+                        "name": "length",
+                        "type": {
+                          "kind": "field"
+                        }
+                      }
+                    ],
+                    "kind": "struct",
+                    "path": "aztec::protocol_types::abis::log_hash::LogHash"
+                  }
+                }
+              },
+              {
+                "name": "historical_header",
+                "type": {
+                  "fields": [
+                    {
+                      "name": "last_archive",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "root",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "next_available_leaf_index",
+                            "type": {
+                              "kind": "integer",
+                              "sign": "unsigned",
+                              "width": 32
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                      }
+                    },
+                    {
+                      "name": "content_commitment",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "num_txs",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "txs_effects_hash",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "in_hash",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "out_hash",
+                            "type": {
+                              "kind": "field"
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::content_commitment::ContentCommitment"
+                      }
+                    },
+                    {
+                      "name": "state",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "l1_to_l2_message_tree",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "root",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                },
+                                {
+                                  "name": "next_available_leaf_index",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                            }
+                          },
+                          {
+                            "name": "partial",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "note_hash_tree",
+                                  "type": {
+                                    "fields": [
+                                      {
+                                        "name": "root",
+                                        "type": {
+                                          "kind": "field"
+                                        }
+                                      },
+                                      {
+                                        "name": "next_available_leaf_index",
+                                        "type": {
+                                          "kind": "integer",
+                                          "sign": "unsigned",
+                                          "width": 32
+                                        }
+                                      }
+                                    ],
+                                    "kind": "struct",
+                                    "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                                  }
+                                },
+                                {
+                                  "name": "nullifier_tree",
+                                  "type": {
+                                    "fields": [
+                                      {
+                                        "name": "root",
+                                        "type": {
+                                          "kind": "field"
+                                        }
+                                      },
+                                      {
+                                        "name": "next_available_leaf_index",
+                                        "type": {
+                                          "kind": "integer",
+                                          "sign": "unsigned",
+                                          "width": 32
+                                        }
+                                      }
+                                    ],
+                                    "kind": "struct",
+                                    "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                                  }
+                                },
+                                {
+                                  "name": "public_data_tree",
+                                  "type": {
+                                    "fields": [
+                                      {
+                                        "name": "root",
+                                        "type": {
+                                          "kind": "field"
+                                        }
+                                      },
+                                      {
+                                        "name": "next_available_leaf_index",
+                                        "type": {
+                                          "kind": "integer",
+                                          "sign": "unsigned",
+                                          "width": 32
+                                        }
+                                      }
+                                    ],
+                                    "kind": "struct",
+                                    "path": "aztec::protocol_types::abis::append_only_tree_snapshot::AppendOnlyTreeSnapshot"
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::partial_state_reference::PartialStateReference"
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::state_reference::StateReference"
+                      }
+                    },
+                    {
+                      "name": "global_variables",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "chain_id",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "version",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "block_number",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "slot_number",
+                            "type": {
+                              "kind": "field"
+                            }
+                          },
+                          {
+                            "name": "timestamp",
+                            "type": {
+                              "kind": "integer",
+                              "sign": "unsigned",
+                              "width": 64
+                            }
+                          },
+                          {
+                            "name": "coinbase",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "inner",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::address::eth_address::EthAddress"
+                            }
+                          },
+                          {
+                            "name": "fee_recipient",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "inner",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                            }
+                          },
+                          {
+                            "name": "gas_fees",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "fee_per_da_gas",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                },
+                                {
+                                  "name": "fee_per_l2_gas",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::gas_fees::GasFees"
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::abis::global_variables::GlobalVariables"
+                      }
+                    },
+                    {
+                      "name": "total_fees",
+                      "type": {
+                        "kind": "field"
+                      }
+                    }
+                  ],
+                  "kind": "struct",
+                  "path": "aztec::protocol_types::header::Header"
+                }
+              },
+              {
+                "name": "tx_context",
+                "type": {
+                  "fields": [
+                    {
+                      "name": "chain_id",
+                      "type": {
+                        "kind": "field"
+                      }
+                    },
+                    {
+                      "name": "version",
+                      "type": {
+                        "kind": "field"
+                      }
+                    },
+                    {
+                      "name": "gas_settings",
+                      "type": {
+                        "fields": [
+                          {
+                            "name": "gas_limits",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "da_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                },
+                                {
+                                  "name": "l2_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::gas::Gas"
+                            }
+                          },
+                          {
+                            "name": "teardown_gas_limits",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "da_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                },
+                                {
+                                  "name": "l2_gas",
+                                  "type": {
+                                    "kind": "integer",
+                                    "sign": "unsigned",
+                                    "width": 32
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::gas::Gas"
+                            }
+                          },
+                          {
+                            "name": "max_fees_per_gas",
+                            "type": {
+                              "fields": [
+                                {
+                                  "name": "fee_per_da_gas",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                },
+                                {
+                                  "name": "fee_per_l2_gas",
+                                  "type": {
+                                    "kind": "field"
+                                  }
+                                }
+                              ],
+                              "kind": "struct",
+                              "path": "aztec::protocol_types::abis::gas_fees::GasFees"
+                            }
+                          },
+                          {
+                            "name": "inclusion_fee",
+                            "type": {
+                              "kind": "field"
+                            }
+                          }
+                        ],
+                        "kind": "struct",
+                        "path": "aztec::protocol_types::abis::gas_settings::GasSettings"
+                      }
+                    }
+                  ],
+                  "kind": "struct",
+                  "path": "aztec::protocol_types::transaction::tx_context::TxContext"
+                }
+              }
+            ],
+            "kind": "struct",
+            "path": "aztec::protocol_types::abis::private_circuit_public_inputs::PrivateCircuitPublicInputs"
+          },
+          "visibility": "public"
+        }
+      },
+      "bytecode": "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",
+      "debug_symbols": "7ZXLCsIwEEX/ZdZdZPJs+isikmorgZBKWwUp/rtR+8IWuiiCi64yj8OFOZs0cMrS6/lgfV5UkOwacMXR1LbwoWsA+XtWXYx/tVVtyhoSEkHmT+F9RJBbl0GiQjnBqEbaklQz3sMo5mgmNGtpJqVcoJEo1uGh5gPPiJjjWZ+OHOlA8zkYSXciItdjeB8Bis3JxIncnEycqP91osjgJOZLTmKhOjxWcpWTeHMycaI3J99OKFnhhGkU3ZVaYA9r+o7GH0WHJi2tc/Z8GP+hYXwzpTWpy9o2v/rjaFvfL59NiHgC",
+      "brillig_names": []
+    },
+    {
+      "name": "compute_note_hash_and_optionally_a_nullifier",
+      "is_unconstrained": true,
+      "custom_attributes": [],
+      "abi": {
+        "error_types": {},
+        "parameters": [
+          {
+            "name": "contract_address",
+            "type": {
+              "fields": [
+                {
+                  "name": "inner",
+                  "type": {
+                    "kind": "field"
+                  }
+                }
+              ],
+              "kind": "struct",
+              "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "nonce",
+            "type": {
+              "kind": "field"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "storage_slot",
+            "type": {
+              "kind": "field"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "note_type_id",
+            "type": {
+              "kind": "field"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "compute_nullifier",
+            "type": {
+              "kind": "boolean"
+            },
+            "visibility": "private"
+          },
+          {
+            "name": "serialized_note",
+            "type": {
+              "kind": "array",
+              "length": 0,
+              "type": {
+                "kind": "field"
+              }
+            },
+            "visibility": "private"
+          }
+        ],
+        "return_type": {
+          "abi_type": {
+            "kind": "array",
+            "length": 4,
+            "type": {
+              "kind": "field"
+            }
+          },
+          "visibility": "public"
+        }
+      },
+      "bytecode": "H4sIAAAAAAAA/9VWzU7DMAx2Wdqm6yomeAB6BA7QSUPacRK/D8ALTKMSu2xoLTw/S2dr39KyC4m0RaqcOLH95bOTNKBt05sv4H7IMqJ2kzVTlsX/2sihr8InzuBEcJ6dCM7eieBUDnEGHTiNVNw3586cuZi257E1icYm0T2YpwOOAiuoaXfQv2b5/rmo8vlqWa9n8zr/WJVVvlzV+XdV5l/rxc+sLs24rFosJwwIQU/dsDZKrI078z0ZzxPG7gH3g/Hb9+O7MIl91DvuCWKZonjlOZEBfxnPE9hntCucJ9BJwT2DTl6EF9DFtB/L4NF+8jXxmK8iAw4JYmDDwyb13idveW5endSK37fiNzllwjXoFA9S0IVWzZjhFcxr2JPM31p7Qyw9C4vxG/rggnMf+fBdFGPkUHVwGHZwGHVweLn53iw/BnesveBuXhQNGBXEEpxnsEYDjhDGN7TTJ1IE7E94Eb/nZu9SR/pvO2XZDWFNBHaxZRcD7mbt5su5nzKfeAc4/DMb2Xe2y78+PMuKfUss2U8Ia+5ZXlC7IQdEfu/ABDC5fiMP3a8S8xju14GFaQg6rMWB5Wtg+ToGu4z2uRWd3OUpyF9gHhYxHg4AAA==",
+      "debug_symbols": "lZDLCsQgDEX/JWsXpXUq+CvDULTVEhAtagcG8d8nfSy6dRNykns2t8Bi9L5O6G1IIN8FXJhVxuCJSmWgIzqH6/Q8Q3cM3p/5tCl/YMoqZpDDKBgYv9AmevItOgNSdPXDgA/NBm82Xs3G2GZUoq+KqLQzd0l29/Ojs/zbrg+F/w==",
+      "brillig_names": [
+        "compute_note_hash_and_optionally_a_nullifier"
+      ]
+    }
+  ],
+  "outputs": {
+    "globals": {},
+    "structs": {
+      "functions": [
+        {
+          "fields": [
+            {
+              "name": "parameters",
+              "type": {
+                "fields": [
+                  {
+                    "name": "sell_token",
+                    "type": {
+                      "fields": [
+                        {
+                          "name": "inner",
+                          "type": {
+                            "kind": "field"
+                          }
+                        }
+                      ],
+                      "kind": "struct",
+                      "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                    }
+                  },
+                  {
+                    "name": "buy_token",
+                    "type": {
+                      "fields": [
+                        {
+                          "name": "inner",
+                          "type": {
+                            "kind": "field"
+                          }
+                        }
+                      ],
+                      "kind": "struct",
+                      "path": "aztec::protocol_types::address::aztec_address::AztecAddress"
+                    }
+                  },
+                  {
+                    "name": "sell_amount",
+                    "type": {
+                      "kind": "field"
+                    }
+                  },
+                  {
+                    "name": "buy_amount",
+                    "type": {
+                      "kind": "field"
+                    }
+                  }
+                ],
+                "kind": "struct",
+                "path": "ProlsRouter::settle_parameters"
+              }
+            }
+          ],
+          "kind": "struct",
+          "path": "ProlsRouter::settle_abi"
+        }
+      ]
+    }
+  },
+  "file_map": {}
+}
