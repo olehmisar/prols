@@ -1,5 +1,9 @@
 import type { AccountWallet, AztecAddress, PXE } from "@aztec/aztec.js";
 
+export * from "./aztec-currency.js";
+export * from "./currency-list.js";
+export * from "./utils.js";
+
 export async function tokenContract(
   token: AztecAddress,
   accountOrPxe: AccountWallet | PXE,

@@ -1,0 +1,29 @@
+{
+  "name": "@repo/backend",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm _chore && tsx src/index.ts",
+    "test": "pnpm test:lint && pnpm test:unit",
+    "test:unit": "pnpm _chore && vitest run",
+    "test:lint": "pnpm _chore && tsc --noEmit --emitDeclarationOnly false && prettier --check . && eslint .",
+    "test:lint:fix": "pnpm _chore && prettier --write . && eslint . --fix",
+    "_chore": "pnpm i"
+  },
+  "dependencies": {
+    "@repo/contracts": "workspace:*",
+    "@uniswap/sdk-core": "^5.8.1",
+    "decimal.js": "^10.4.3",
+    "express": "^4.21.0",
+    "ky": "^1.7.2",
+    "ts-essentials": "^9.4.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "cors": "^2.8.5",
+    "prettier": "^3.2.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.2"
+  }
+}

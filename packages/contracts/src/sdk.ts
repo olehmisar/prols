@@ -21,7 +21,7 @@ export class ProlsFrontendService {
     const secretHash = computeSecretHash(secret);
     const nonce = Fr.random();
     const router = await this.#getRouter(account);
-    return await router.methods
+    const swapTx = await router.methods
       .swap(
         AztecAddress.fromString(quote.amountIn.currency.address),
         AztecAddress.fromString(quote.amountOut.currency.address),
@@ -32,6 +32,13 @@ export class ProlsFrontendService {
       )
       .send()
       .wait();
+
+    return await this.redeemShield({
+      account,
+      amount: quote.amountOut,
+      secret,
+      txHash: swapTx.txHash,
+    });
   }
 
   async redeemShield({
@@ -111,27 +118,6 @@ export function createFrontendSdk(prolsRouterAddress: AztecAddress) {
     prols: new ProlsFrontendService(prolsRouterAddress),
   };
 }
-
-// export class ProlsBackendService {
-//   constructor(
-//     private binance: Binance,
-//     private managerAccountId: string,
-//   ) {}
-
-//   async hedge({
-//     amountIn,
-//     amountOut,
-//   }: {
-//     amountIn: CurrencyAmount<L2Token>;
-//     amountOut: CurrencyAmount<L2Token>;
-//   }) {
-//     await this.binance.trade(
-//       this.managerAccountId,
-//       currencyAmountToBinanceAmount(amountIn),
-//       currencyAmountToBinanceAmount(amountOut),
-//     );
-//   }
-// }
 
 type Quote = {
   amountIn: CurrencyAmount<L2Token>;
