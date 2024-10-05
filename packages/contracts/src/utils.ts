@@ -42,3 +42,10 @@ export function parseCurrencyAmount<T extends L2Token>(
   }
   return CurrencyAmount.fromRawAmount(token, rawAmount.toString());
 }
+
+export function formatCurrencyAmount(amount: CurrencyAmount<Currency>) {
+  return ethers.formatUnits(
+    BigInt(amount.quotient.toString()),
+    amount.currency.decimals,
+  );
+}
