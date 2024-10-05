@@ -46,6 +46,26 @@ app.post("/quote", async (req, res) => {
   }
 });
 
+app.post("/hedge", async (req, res) => {
+  const parsed = z
+    .object({
+      amountIn: z.string(),
+      amountInSymbol: z.string(),
+      amountOut: z.string(),
+      amountOutSymbol: z.string(),
+    })
+    .parse(req.body);
+
+  const currencyIn = sdk.currencyList.getBySymbol(parsed.amountInSymbol);
+  assert(currencyIn, `Currency not found: "${parsed.amountInSymbol}"`);
+  const currencyOut = sdk.currencyList.getBySymbol(parsed.amountOutSymbol);
+  const amountIn = parseCurrencyAmount(currencyIn, parsed.amountIn);
+
+  assert(currencyOut, `Currency not found: "${parsed.amountOutSymbol}"`);
+  const amountOut = parseCurrencyAmount(currencyOut, parsed.amountOut);
+  await sdk.prols.hedge({ amountIn, amountOut });
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

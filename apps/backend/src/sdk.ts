@@ -11,6 +11,20 @@ export class ProlsBackendService {
     private managerAccountId: string,
   ) {}
 
+  async hedge({
+    amountIn,
+    amountOut,
+  }: {
+    amountIn: CurrencyAmount<L2Token>;
+    amountOut: CurrencyAmount<L2Token>;
+  }) {
+    await this.binance.trade(
+      this.managerAccountId,
+      currencyAmountToBinanceAmount(amountIn),
+      currencyAmountToBinanceAmount(amountOut),
+    );
+  }
+
   async getQuote({
     amountIn,
     currencyOut,

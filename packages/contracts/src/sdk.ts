@@ -1,11 +1,14 @@
+import { getInitialTestAccountsWallets } from "@aztec/accounts/testing";
 import {
   AccountWallet,
   AztecAddress,
   computeSecretHash,
+  createPXEClient,
   ExtendedNote,
   Fr,
   Note,
   TxHash,
+  type PXE,
 } from "@aztec/aztec.js";
 import { CurrencyAmount } from "@uniswap/sdk-core";
 import ky from "ky";
@@ -15,8 +18,18 @@ import { CurrencyListService } from "./currency-list";
 import { tokenContract } from "./index";
 import { currencyAmountToBigInt } from "./utils";
 
+export const API_URL = "http://localhost:3000";
+
 export class ProlsFrontendService {
-  constructor(private routerAddress: AztecAddress) {}
+  readonly pxe: PXE;
+  constructor(private routerAddress: AztecAddress) {
+    this.pxe = createPXEClient("https://sandbox.shieldswap.org");
+  }
+
+  async connectWallet() {
+    const accounts = await getInitialTestAccountsWallets(this.pxe);
+    return accounts[1]!;
+  }
 
   async getQuote({
     amountIn,
@@ -26,7 +39,7 @@ export class ProlsFrontendService {
     currencyOut: L2Token;
   }) {
     const amountOutResp = await ky
-      .post("/quote", {
+      .post(API_URL + "/quote", {
         json: {
           amountIn: amountIn.quotient.toString(),
           amountInSymbol: amountIn.currency.symbol,
@@ -54,6 +67,20 @@ export class ProlsFrontendService {
       )
       .send()
       .wait();
+
+    setTimeout(async () => {
+      // background job
+
+      // ideally, backend should monitor the blockchain for swaps and create a hedging position. But we don't have time for that, so we trust user to be honest and notify us about the swap
+      await ky.post(API_URL + "/hedge", {
+        json: {
+          amountIn: quote.amountIn.quotient.toString(),
+          amountInSymbol: quote.amountIn.currency.symbol,
+          amountOut: quote.amountOut.quotient.toString(),
+          amountOutSymbol: quote.amountOut.currency.symbol,
+        },
+      });
+    }, 0);
 
     return await this.redeemShield({
       account,
