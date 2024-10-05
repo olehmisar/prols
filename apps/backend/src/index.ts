@@ -1,4 +1,5 @@
-import { CurrencyListService, parseCurrencyAmount } from "@repo/contracts";
+import { CurrencyListService } from "@repo/contracts";
+import { CurrencyAmount } from "@uniswap/sdk-core";
 import cors from "cors";
 import express from "express";
 import { assert } from "ts-essentials";
@@ -36,7 +37,7 @@ app.post("/quote", async (req, res) => {
     assert(currencyIn, `Currency not found: "${parsed.amountInSymbol}"`);
     const currencyOut = sdk.currencyList.getBySymbol(parsed.amountOutSymbol);
     assert(currencyOut, `Currency not found: "${parsed.amountOutSymbol}"`);
-    const amountIn = parseCurrencyAmount(currencyIn, parsed.amountIn);
+    const amountIn = CurrencyAmount.fromRawAmount(currencyIn, parsed.amountIn);
     const amountOut = await sdk.prols.getQuote({ amountIn, currencyOut });
     res.json({
       amountOut: amountOut.quotient.toString(),
@@ -59,10 +60,10 @@ app.post("/hedge", async (req, res) => {
   const currencyIn = sdk.currencyList.getBySymbol(parsed.amountInSymbol);
   assert(currencyIn, `Currency not found: "${parsed.amountInSymbol}"`);
   const currencyOut = sdk.currencyList.getBySymbol(parsed.amountOutSymbol);
-  const amountIn = parseCurrencyAmount(currencyIn, parsed.amountIn);
+  const amountIn = CurrencyAmount.fromRawAmount(currencyIn, parsed.amountIn);
 
   assert(currencyOut, `Currency not found: "${parsed.amountOutSymbol}"`);
-  const amountOut = parseCurrencyAmount(currencyOut, parsed.amountOut);
+  const amountOut = CurrencyAmount.fromRawAmount(currencyOut, parsed.amountOut);
   await sdk.prols.hedge({ amountIn, amountOut });
 });
 
