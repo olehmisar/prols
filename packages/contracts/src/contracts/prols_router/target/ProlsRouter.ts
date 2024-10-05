@@ -155,8 +155,8 @@ TokenNote: {
     /** compute_note_hash_and_optionally_a_nullifier(contract_address: struct, nonce: field, storage_slot: field, note_type_id: field, compute_nullifier: boolean, serialized_note: array) */
     compute_note_hash_and_optionally_a_nullifier: ((contract_address: AztecAddressLike, nonce: FieldLike, storage_slot: FieldLike, note_type_id: FieldLike, compute_nullifier: boolean, serialized_note: FieldLike[]) => ContractFunctionInteraction) & Pick<ContractMethod, 'selector'>;
 
-    /** settle(sell_token: struct, buy_token: struct, sell_amount: field, buy_amount: field, secret_hash: field, nonce: field) */
-    settle: ((sell_token: AztecAddressLike, buy_token: AztecAddressLike, sell_amount: FieldLike, buy_amount: FieldLike, secret_hash: FieldLike, nonce: FieldLike) => ContractFunctionInteraction) & Pick<ContractMethod, 'selector'>;
+    /** swap(sell_token: struct, buy_token: struct, sell_amount: field, buy_amount: field, secret_hash: field, nonce: field) */
+    swap: ((sell_token: AztecAddressLike, buy_token: AztecAddressLike, sell_amount: FieldLike, buy_amount: FieldLike, secret_hash: FieldLike, nonce: FieldLike) => ContractFunctionInteraction) & Pick<ContractMethod, 'selector'>;
 
     /** withdraw(token: struct, amount: field, to: struct) */
     withdraw: ((token: AztecAddressLike, amount: FieldLike, to: AztecAddressLike) => ContractFunctionInteraction) & Pick<ContractMethod, 'selector'>;
